@@ -75,6 +75,11 @@ typings/
 # .idea
 .idea
 
+# dist
+
 dist/
 public/
 
+# pm2
+
+ecosystem.config.js

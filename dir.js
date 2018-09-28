@@ -1,6 +1,5 @@
 const path = require('path');
 const isWindows = process.platform === 'win32';
-console.log(isWindows);
 
 module.exports = isWindows ? {
   vampire: path.resolve(__dirname, '../vampire'),
