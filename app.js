@@ -10,8 +10,11 @@ const app = express();
 app.use(logger('dev'));
 app.use('/ctf-api', proxy({
   target: 'http://localhost:8000',
-  changeOrigin: false,
+  changeOrigin: true,
   pathRewrite: { '^/ctf-api' : '/' },
+  autoRewrite: true,
+  prependPath: false,
+  followRedirects: true
 }));
 
 app.use(express.json());
