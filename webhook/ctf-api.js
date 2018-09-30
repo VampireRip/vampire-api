@@ -18,7 +18,7 @@ handler.on('push', ({payload}) => {
   console.log(`receive update request: ${repository.name} on ${new Date}`);
   console.time(tag);
   git.forceCheckout().then(() =>
-      spawn('python3', ['manage.py', ' migrate'], config)
+      spawn('python3', ['manage.py', 'migrate'], config)
   ).then(() =>
       spawn('pm2', ['restart', 'ctfApi'])
   ).then(() => {
