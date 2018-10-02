@@ -22,6 +22,8 @@ handler.on('push', ({payload}) => {
   ).then(() =>
       spawn('python3', ['manage.py', 'migrate'], config)
   ).then(() =>
+      spawn('python3', ['manage.py', 'migrate', '--run-syncdb'], config)
+  ).then(() =>
       spawn('pm2', ['restart', 'ctfApi'])
   ).then(() => {
       console.log(`update to ${repository.name} succeed.`);
