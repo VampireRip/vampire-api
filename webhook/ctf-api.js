@@ -20,9 +20,9 @@ handler.on('push', ({payload}) => {
   git.forceCheckout().then(() =>
       spawn('pip', ['install', '-r', 'requirements.txt'], config)
   ).then(() =>
-      spawn('python3', ['manage.py', 'makemigrations'], config)
+      spawn('rm', ['db.sqlite3', '-f'], config)
   ).then(() =>
-      spawn('python3', ['manage.py', 'migrate'], config)
+      spawn('python3', ['manage.py', 'migrate', '--run-syncdb'], config)
   ).then(() =>
       spawn('pm2', ['restart', 'ctfApi'])
   ).then(() => {
