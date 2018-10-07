@@ -1,6 +1,7 @@
 const createHandler = require('github-webhook-handler');
 const handler = createHandler({secret: process.env.GITHUB_WEBHOOK_SECRET});
-
+const fs = require('fs');
+const path = require('path');
 const dir = require('../dir');
 const config = {
   cwd: dir.ctfApi
@@ -20,7 +21,7 @@ handler.on('push', ({payload}) => {
   git.forceCheckout().then(() =>
       spawn('pip', ['install', '-r', 'requirements.txt'], config)
   ).then(() =>
-      spawn('rm', ['db.sqlite3', '-f'], config)
+      Promise.resolve().then(()=>fs.unlinkSync(path.join(dir.ctfApi, 'db.sqlite3'))).catch(e => {})
   ).then(() =>
       spawn('python3', ['manage.py', 'migrate', '--run-syncdb'], config)
   ).then(() =>
