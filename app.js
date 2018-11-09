@@ -8,22 +8,16 @@ const proxy = require('http-proxy-middleware');
 const app = express();
 
 app.use(logger('dev'));
-app.use('/ctf-api', proxy({
-  target: 'http://localhost:8000',
-  changeOrigin: true,
-  pathRewrite: { '^/ctf-api' : '/' },
-  autoRewrite: true,
-  prependPath: false,
-  followRedirects: true
-}));
-
+app.use((req, res, next) => {
+  if (req.hostname === "os.vampire.rip") {
+    return express.static(path.resolve(dir.os, '.'))(req, res, next)
+  }
+  return next();
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/github-webhook/vampire', require('./webhook/vampire'));
-app.use('/github-webhook/ctf', require('./webhook/ctf'));
-app.use('/github-webhook/ctf-api', require('./webhook/ctf-api'));
-app.use('/ctf', express.static(path.resolve(dir.ctf, 'public')));
 app.use(express.static(path.resolve(dir.vampire, 'public')));
 
 app.use((req, res, next) => {
