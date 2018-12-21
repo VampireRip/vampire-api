@@ -7,10 +7,11 @@ const host = {
   api: 'api.vampire.rip'
 }
 
-module.exports = isWindows ? {
-  vampire: path.resolve(__dirname, '../', host.vampire),
-  os: path.resolve(__dirname, '../', host.os)
-} : {
-  vampire: path.join('/var/www/', host.vampire),
-  os: path.join('/var/www/vampire-os', host.os)
+const base = isWindows
+  ? path.resolve(__dirname, '../')
+  : '/var/www/'
+
+module.exports = {
+  vampire: path.resolve(base, host.vampire),
+  os: path.resolve(base, host.os)
 }
