@@ -2,15 +2,9 @@
 
 const app = require('../app');
 const http = require('http');
-const https = require('https');
-const path = require('path');
-const dir = require('../dir');
 
-const fs = require('fs');
-
-const port = 80;
+const port = 8001;
 app.set('port', port);
-
 
 const server = http.createServer(app);
 
@@ -19,19 +13,3 @@ server.listen(port);
 server.on('listening', () => {
   console.log('HTTP server listening on ', server.address());
 });
-
-let key, cert, ca;
-try {
-  key = fs.readFileSync(path.join(dir.cert,'key.key'));
-  cert = fs.readFileSync(path.join(dir.cert,'cert.crt'));
-  ca = fs.readFileSync(path.join(dir.cert,'ca.crt'));
-  const httpsServer = https.createServer({
-    key, cert, ca
-  }, app);
-  httpsServer.listen(443);
-  httpsServer.on('listening', () => {
-    console.log('HTTPS server listening on ', httpsServer.address());
-  });
-} catch (e) {
-  console.log('HTTPS server failed to start', e);
-}
