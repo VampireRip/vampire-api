@@ -1,5 +1,5 @@
 const LISTEN = 'push:vampire/vampire-os/master'
-const events = '..'
+const events = require('..')
 
 const { os: cwd } = require('../../dir')
 const utils = require('../utils')({ cwd })

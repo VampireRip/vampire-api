@@ -6,7 +6,7 @@ module.exports = {
     instances: 1,
     autorestart: true,
     max_memory_restart: '512M',
-    log_date_format: 'MM-DD HH:mm Z',
+    log_date_format: 'MM-DD HH:mm',
     env: {
       GITHUB_WEBHOOK_SECRET: '<什么奇怪的东西>'
     }

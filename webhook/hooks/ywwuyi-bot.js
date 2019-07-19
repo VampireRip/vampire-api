@@ -1,5 +1,5 @@
 const LISTEN = 'push:Misaka-0x447f/ywwuyi-bot/master'
-const events = '..'
+const events = require('..')
 
 const { bot: cwd } = require('../../dir')
 const utils = require('../utils')({ cwd })

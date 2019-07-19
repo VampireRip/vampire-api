@@ -20,7 +20,7 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use('/_vampire-webhook', require('./webhook'))
+app.use('/_vampire-webhook', require('./webhook').middleware)
 app.use('/_vampire-webhook/_update-hooks', require('./webhook/loader'))
 
 app.use((req, res, next) => {

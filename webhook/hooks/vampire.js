@@ -1,5 +1,5 @@
 const LISTEN = 'push:vampire/vampire/master'
-const events = '..'
+const events = require('..')
 
 const { vampire: cwd } = require('../../dir')
 const utils = require('../utils')({ cwd })
