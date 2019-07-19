@@ -4,13 +4,23 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server;
     
-    # listen 443 ssl default_server;
-    # listen [::]:443 ssl default_server;
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
     
     root /var/www/html;
     
     server_name _;
-    
+
+    location = /403.html {
+        root /var/www/html;
+        allow all;
+    }
+
+    location = /404.html {
+        root /var/www/html;
+        allow all;
+    }
+
     location / {
         try_files $uri $uri/ =404;
     }
