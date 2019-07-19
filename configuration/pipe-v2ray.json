@@ -1,0 +1,76 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 3000,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "7de6591f-1fb1-4c05-922f-a1b9e81653ce",
+            "level": 0,
+            "alterId": 8,
+            "email": "sunrisefox@vampire.rip"
+          }
+        ],
+        "disableInsecureEncryption": true
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {
+          "header": {
+            "type": "http"
+          }
+        }
+      }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": 3001,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "7de6591f-1fb1-4c05-922f-a1b9e81653ce",
+            "level": 0,
+            "alterId": 8,
+            "email": "sunrisefox@vampire.rip"
+          }
+        ],
+        "disableInsecureEncryption": true
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/"
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    }
+  ],
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 4,
+        "connIdle": 300,
+        "uplinkOnly": 2,
+        "downlinkOnly": 5,
+        "statsUserUplink": false,
+        "statsUserDownlink": false,
+        "bufferSize": 10240
+      }
+    },
+    "system": {
+      "statsInboundUplink": false,
+      "statsInboundDownlink": false
+    }
+  }
+}

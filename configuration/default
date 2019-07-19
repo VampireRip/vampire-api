@@ -1,0 +1,17 @@
+# https://www.nginx.com/resources/wiki/start/
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    
+    # listen 443 ssl default_server;
+    # listen [::]:443 ssl default_server;
+    
+    root /var/www/html;
+    
+    server_name _;
+    
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

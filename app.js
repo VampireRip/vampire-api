@@ -9,7 +9,7 @@ app.use((req, res, next) => {
   if (origin.endsWith('vampire.rip') || origin.endsWith('vampire.ink')) {
     res.set('Access-Control-Allow-Origin', origin)
     res.set('Access-Control-Allow-Methods',
-      'POST, GET, OPTIONS, DELETE, PUT, PATCH')
+      'GET, OPTIONS, POST, PUT, DELETE, PATCH')
     res.set('Access-Control-Allow-Credentials', 'true')
     res.set('Access-Control-Allow-Headers', 'Content-Type, Accept, Cookie')
   }
@@ -20,8 +20,8 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use('/github-webhook/vampire-os', require('./webhook/vampire-os'))
-app.use('/github-webhook/vampire', require('./webhook/vampire'))
+app.use('/_vampire-webhook', require('./webhook'))
+app.use('/_vampire-webhook/_update-hooks', require('./webhook/loader'))
 
 app.use((req, res, next) => {
   if (res.headersSent) return
