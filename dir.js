@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 const isWindows = process.platform === 'win32'
 
 const host = {
@@ -12,9 +13,15 @@ const base = isWindows
   ? path.resolve(__dirname, '../')
   : '/var/www/'
 
-module.exports = {
+const resolved = {
   api: __dirname,
   vampire: path.resolve(base, host.vampire),
   os: path.resolve(base, host.os),
   bot: path.resolve(base, host.bot)
 }
+
+Object.keys(resolved).forEach(k => {
+  if (!fs.existsSync(resolved[k])) { fs.mkdirSync(resolved[k]) }
+})
+
+module.exports = resolved

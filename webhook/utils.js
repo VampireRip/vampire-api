@@ -6,7 +6,9 @@ module.exports = config => {
   const forceCheckout = () => Promise.resolve()
     .then(() =>
       spawn('git', ['clean', '-fd'], config)
-    )
+    ).catch(e => {
+      if (e === 128) { spawn('git', ['clone', config.repo, config.cwd], config) } else throw new Error('git returned ' + e)
+    })
     .then(() =>
       spawn('git', ['fetch', '--all'], config)
     )
@@ -25,11 +27,13 @@ module.exports = config => {
   const restartNode = () => Promise.resolve()
     .then(() => {
       let config
+
       fs.existsSync(config = path.join(config.cwd, 'ecosystem.config.js')) ||
-    fs.existsSync(config = path.join(config.cwd, 'ecosystem.config.json')) ||
-    fs.existsSync(config = path.join(config.cwd, 'ecosystem.config.yaml')) ||
-    (config = null)
-      if (fs.existsSync(config = path.join(config.cwd, 'package.json'))) {
+      fs.existsSync(config = path.join(config.cwd, 'ecosystem.config.json')) ||
+      fs.existsSync(config = path.join(config.cwd, 'ecosystem.config.yaml')) ||
+      (config = null)
+
+      if (config === null && fs.existsSync(config = path.join(config.cwd, 'package.json'))) {
         const json = fs.readFileSync(config)
         config = json.main || json.entry
       }

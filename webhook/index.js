@@ -28,7 +28,9 @@ handler.on('*', (emitData) => {
 
 module.exports = {
   on (e, h) {
-    return events.on(e, () => Promise.resolve().then(h).catch(console.error))
+    return events.on(e, args => {
+      Promise.resolve(args).then(h).catch(console.error)
+    })
   },
   removeAllListeners: events.removeAllListeners.bind(events),
   middleware: handler

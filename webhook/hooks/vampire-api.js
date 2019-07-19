@@ -1,10 +1,14 @@
-const LISTEN = 'push:vampire/vampire-api/master'
+const LISTEN = 'push:vampire-rip/vampire-api/master'
 const events = require('..')
 
 const { api: cwd } = require('../../dir')
-const utils = require('../utils')({ cwd })
+const utils = require('../utils')({
+  cwd,
+  repo: 'https://github.com/vampire-rip/vampire-api'
+})
 
-events.on(LISTEN, ({ repository }) => {
+events.on(LISTEN, args => {
+  const { repository } = args.payload
   utils.forceCheckoutAndRestart()
     .then(() => {
       console.log(`update to ${repository.name} succeed.`)
