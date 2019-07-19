@@ -6,7 +6,8 @@ const host = {
   api: 'api.vampire.rip',
   vampire: 'vampire.rip',
   os: 'os.vampire.rip',
-  bot: 'ywwuyi.vampire.rip'
+  bot: 'ywwuyi.vampire.rip',
+  docs: 'docs.vampire.rip'
 }
 
 const base = isWindows
@@ -17,7 +18,8 @@ const resolved = {
   api: __dirname,
   vampire: path.resolve(base, host.vampire),
   os: path.resolve(base, host.os),
-  bot: path.resolve(base, host.bot)
+  bot: path.resolve(base, host.bot),
+  docs: path.resolve(base, host.docs)
 }
 
 Object.keys(resolved).forEach(k => {
