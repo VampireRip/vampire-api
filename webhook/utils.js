@@ -26,18 +26,18 @@ module.exports = config => {
 
   const restartNode = () => Promise.resolve()
     .then(() => {
-      let config
+      let c
 
-      fs.existsSync(config = path.join(config.cwd, 'ecosystem.config.js')) ||
-      fs.existsSync(config = path.join(config.cwd, 'ecosystem.config.json')) ||
-      fs.existsSync(config = path.join(config.cwd, 'ecosystem.config.yaml')) ||
-      (config = null)
+      fs.existsSync(c = path.join(config.cwd, 'ecosystem.config.js')) ||
+      fs.existsSync(c = path.join(config.cwd, 'ecosystem.config.json')) ||
+      fs.existsSync(c = path.join(config.cwd, 'ecosystem.config.yaml')) ||
+      (c = null)
 
-      if (config === null && fs.existsSync(config = path.join(config.cwd, 'package.json'))) {
-        const json = fs.readFileSync(config)
-        config = json.main || json.entry
+      if (c === null && fs.existsSync(c = path.join(config.cwd, 'package.json'))) {
+        const json = fs.readFileSync(c)
+        c = json.main || json.entry
       }
-      return config ? spawn('pm2', ['start', '-f', config]) : Promise.reject(new Error('no entry point found at ' + config.cwd))
+      return c ? spawn('pm2', ['start', '-f', c]) : Promise.reject(new Error('no entry point found at ' + config.cwd))
     })
 
   return {
