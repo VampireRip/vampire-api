@@ -1,11 +1,9 @@
-const LISTEN = 'push:Misaka-0x447f/ywwuyi-bot/master'
+const repo = 'Misaka-0x447f/ywwuyi-bot'
+const LISTEN = `push:${repo}/master`
 const events = require('..')
 
 const { bot: cwd } = require('../../dir')
-const utils = require('../utils')({
-  cwd,
-  repo: 'https://github.com/Misaka-0x447f/ywwuyi-bot'
-})
+const utils = require('../utils')({ cwd, repo })
 
 events.on(LISTEN, args => {
   const { repository } = args.payload

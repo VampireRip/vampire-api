@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = config => {
+  config.repo = config.repo.indexOf('http') === 0 ? config.repo : ('https://github.com/' + config.repo)
   const forceCheckout = () => Promise.resolve()
     .then(() =>
       spawn('git', ['clean', '-fd'], config)

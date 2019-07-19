@@ -1,11 +1,9 @@
-const LISTEN = 'push:vampire-rip/vampire-api/master'
+const repo = 'vampire-rip/vampire-api'
+const LISTEN = `push:${repo}/master`
 const events = require('..')
 
 const { api: cwd } = require('../../dir')
-const utils = require('../utils')({
-  cwd,
-  repo: 'https://github.com/vampire-rip/vampire-api'
-})
+const utils = require('../utils')({ cwd, repo })
 
 events.on(LISTEN, args => {
   const { repository } = args.payload
