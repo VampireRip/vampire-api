@@ -78,8 +78,11 @@ typings/
 # dist
 
 dist/
-public/
 
 # pm2
 
 ecosystem.config.js
+
+# v2ray
+
+/configuration/v2ray/*.json

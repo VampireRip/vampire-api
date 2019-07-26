@@ -122,3 +122,14 @@ systemctl start firewalld
 firewall-cmd --permanent --add-service=http 
 firewall-cmd --permanent --add-service=https
 firewall-cmd --reload
+
+if (( $UBUNTU == 0)); then 
+  apt-get install -y curl
+  curl -sL https://deb.nodesource.com/setup_12.x | bash -
+  apt-get install -y nodejs
+else
+  yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  yum install -y certbot
+  yum install -y python2-certbot-dns-cloudflare
+
+fi

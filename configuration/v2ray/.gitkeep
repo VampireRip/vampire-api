@@ -48,6 +48,52 @@
           "path": "/"
         }
       }
+    },
+    {
+      "listen": "127.0.0.1",
+      "port": 8388,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "7de6591f-1fb1-4c05-922f-a1b9e81653ce",
+            "level": 0,
+            "alterId": 8,
+            "email": "sunrisefox@vampire.rip"
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/download/"
+        }
+      }
+    },
+    {
+      "listen": "::",
+      "port": 22,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "7de6591f-1fb1-4c05-922f-a1b9e81653ce",
+            "level": 0,
+            "alterId": 8,
+            "email": "sunrisefox@vampire.rip"
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "quic",
+        "quicSettings": {
+          "security": "chacha20-poly1305",
+          "key": "@!QKeep&^=0133",
+          "header": {
+            "type": "wireguard"
+          }
+        }
+      }
     }
   ],
   "outbounds": [

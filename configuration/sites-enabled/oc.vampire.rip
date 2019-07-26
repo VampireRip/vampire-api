@@ -1,8 +1,10 @@
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    ssl_certificate     /var/www/cert/cert;
-    ssl_certificate_key /var/www/cert/key;
+    
+    ssl_certificate     /var/www/cert/oc_cert;
+    ssl_certificate_key /var/www/cert/oc_key;
+    
     server_name oc.vampire.rip;
 
     location / {
