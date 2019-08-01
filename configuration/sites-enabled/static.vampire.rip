@@ -1,19 +1,19 @@
 server {
-        listen 80;
-        listen [::]:80;
-        listen 443 ssl;
-        listen [::]:443 ssl;
+    listen 80;
+    listen [::]:80;
+    listen 443 ssl;
+    listen [::]:443 ssl;
 
-        ssl_certificate     /var/www/cert/oc_cert;
-        ssl_certificate_key /var/www/cert/oc_key;
+    ssl_certificate     /var/www/cert/oc_cert;
+    ssl_certificate_key /var/www/cert/oc_key;
 
-        root /var/www/html/static;
+    root /var/www/html/static;
 
-        index index.html;
+    index index.html;
 
-        server_name static.vampire.rip;
+    server_name static.vampire.rip;
 
-        location / {
-            try_files $uri $uri/ =404;
-        }
+    location / {
+        try_files $uri $uri/ =404;
+    }
 }

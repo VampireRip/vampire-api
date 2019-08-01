@@ -1,8 +1,8 @@
 server {
   listen 443 ssl;
-  listen 443 ssl;
+  listen [::]:443 ssl;
 
-  server_name static.vampire.rip;
+  server_name magic.vampire.rip;
 
   ssl_certificate     /var/www/cert/cert;
   ssl_certificate_key /var/www/cert/key;

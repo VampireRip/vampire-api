@@ -86,3 +86,7 @@ ecosystem.config.js
 # v2ray
 
 /configuration/v2ray/*.json
+
+# secret
+
+/cert/cloudflare.ini
