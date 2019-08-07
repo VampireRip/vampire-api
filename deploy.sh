@@ -46,6 +46,8 @@ fi
 systemctl stop firewalld
 systemctl disable firewalld
 
+echo "the ssh port is $PORT"
+
 ## pre-open it
 cp /usr/lib/firewalld/services/ssh.xml /etc/firewalld/services/ssh.xml
 sed -i "s/\\(port=\"\\)[[:digit:]]\\+/\\1$PORT/" /etc/firewalld/services/ssh.xml
