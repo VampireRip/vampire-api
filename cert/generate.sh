@@ -1,6 +1,6 @@
 #!/bin/bash
 mkdir -p /var/www/cert
-openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /var/www/cert/key -out /var/www/cert/cert -config cert.conf
+openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /var/www/cert/key -out /var/www/cert/cert -config cert.conf -batch
 yes | cp /var/www/cert/key /var/www/cert/oc_key
 yes | cp /var/www/cert/cert /var/www/cert/oc_cert
 
@@ -14,6 +14,8 @@ cat <<EOT > /etc/nginx/ssl.conf
 ssl_certificate     /etc/letsencrypt/live/vampire.rip/fullchain.pem;
 ssl_certificate_key /etc/letsencrypt/live/vampire.rip/privkey.pem;
 EOT
+
+systemctl start nginx
 
 nginx -s reload
 

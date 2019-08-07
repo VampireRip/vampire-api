@@ -110,8 +110,9 @@ npm i pm2 -g
 pm2 startup
 
 ## clone vampire-api and run init
-git clone https://github.com/vampire-rip/vampire-api /var/www/vampire-api
-cd /var/www/vampire-api
+git clone https://github.com/vampire-rip/vampire-api /var/www/api.vampire.rip
+cd /var/www/api.vampire.rip
+npm i
 # npm run init
 
 ## todo: vampire init
