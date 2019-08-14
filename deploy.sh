@@ -124,12 +124,28 @@ systemctl enable firewalld
 systemctl start firewalld
 firewall-cmd --permanent --add-service=http
 firewall-cmd --permanent --add-service=https
+firewall-cmd --permanent --zone=trusted --change-interface=docker0 # 把 Docker 添加到信任列表
+# 或者 --add-interface
 firewall-cmd --reload
 
 if (( $UBUNTU == 0)); then
-  apt-get install -y curl
-  curl -sL https://deb.nodesource.com/setup_12.x | bash -
-  apt-get install -y nodejs
+  # https://www.postgresql.org/download/linux/ubuntu/
+else
+  rpm -Uvh https://yum.postgresql.org/11/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+  yum install postgresql11-server postgresql11 -y
+  initdb
+  sed -i 's/#\?\(listen_addresses\s*=\).*$/\1 '"'"'172.17.0.1, localhost'"'"'/' /var/lib/pgsql/11/data/postgresql.conf
+  echo "host all all 172.17.0.0/16 password" >> /var/lib/pgsql/11/data/pg_hba.conf
+  systemctl enable postgresql-11
+  systemctl start postgresql-11
+fi
+
+if (( $UBUNTU == 0)); then
+  sudo apt-get update
+  sudo apt-get -y install software-properties-common
+  sudo add-apt-repository -y universe
+  sudo add-apt-repository -y ppa:certbot/certbot
+  sudo apt-get -y install certbot python2-certbot-dns-cloudflare
 else
   yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
   yum install -y certbot
