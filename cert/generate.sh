@@ -8,7 +8,8 @@ mkdir -p ~/.secrets/certbot/
 yes | cp cloudflare.ini ~/.secrets/certbot/cloudflare.ini
 chmod 600 ~/.secrets/certbot/cloudflare.ini
 
-certbot certonly --dns-cloudflare --dns-cloudflare-credentials ~/.secrets/certbot/cloudflare.ini --dns-cloudflare-propagation-seconds 10 -d *.vampire.rip,*.vps.vampire.rip
+## not supported
+# certbot-auto certonly --dns-cloudflare --dns-cloudflare-credentials ~/.secrets/certbot/cloudflare.ini --dns-cloudflare-propagation-seconds 10 -d *.vampire.rip,*.vps.vampire.rip
 
 cat <<EOT > /etc/nginx/ssl.conf
 ssl_certificate     /etc/letsencrypt/live/vampire.rip/fullchain.pem;
@@ -19,4 +20,4 @@ systemctl start nginx
 
 nginx -s reload
 
-echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew" | sudo tee -a /etc/crontab > /dev/null
+# echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random() * 3600)' && /usr/local/bin/certbot-auto renew" | sudo tee -a /etc/crontab > /dev/null

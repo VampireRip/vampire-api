@@ -5,7 +5,7 @@ tee -a ~/.bashrc <<< "export LC_ALL=en_US.utf8"
 tee -a ~/.bashrc <<< "export LANG=en_US.utf8"
 
 ## . match hidden files by default
-tee -a ~/.bashrc <<< "shopt -s dotglob"
+# tee -a ~/.bashrc <<< "shopt -s dotglob"
 
 source ~/.bashrc
 
@@ -15,8 +15,8 @@ if (( $UBUNTU == 0)); then
   apt-get update
   apt-get install -y build-essential
 else
-  yum update
-  yum groupinstall -y 'Development Tools'
+  dnf update
+  dnf groupinstall -y 'Development Tools'
 fi
 
 HOSTNAME="info.vampire.rip"
@@ -39,9 +39,9 @@ if (( $UBUNTU == 0)); then
   apt-get remove -y ufw
   apt-get install -y firewalld
 else
-  yum install -y firewalld
-  yum install -y policycoreutils-python
-  semanage port -a -t ssh_port_t -p tcp $PORT
+  # dnf install -y firewalld
+  # dnf install -y policycoreutils-python
+  # semanage port -a -t ssh_port_t -p tcp $PORT
 fi
 systemctl stop firewalld
 systemctl disable firewalld
@@ -67,25 +67,30 @@ chmod 600 /root/.ssh/authorized_keys
 systemctl restart sshd
 
 ## install docker
-curl -fsSL get.docker.com | CHANNEL=test sh
+# curl -fsSL get.docker.com | CHANNEL=test sh
 
 ## install node
 if (( $UBUNTU == 0)); then
   apt-get install -y curl
-  curl -sL https://deb.nodesource.com/setup_12.x | bash -
+  curl -sL https://deb.nodesource.com/setup_13.x | bash -
   apt-get install -y nodejs
 else
-  curl -sL https://rpm.nodesource.com/setup_12.x | bash -
-  yum install -y nodejs
+  ## dnf repolist to list repo 
+  ## rpm -e repoid to remove repo
+  # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+  # source ~/.bash_profile
+  # nvm list-remote
+  # curl -sL https://rpm.nodesource.com/setup_13.x | bash -
+  # dnf install -y nodejs
 fi
 
 ## enable bbr
 if (( $UBUNTU != 0)); then
-  rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-  yum install -y https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
-  yum --enablerepo=elrepo-kernel -y install kernel-ml
-  grub2-set-default 0
-  grub2-mkconfig -o /boot/grub2/grub.cfg
+  # rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+  # yum install -y https://www.elrepo.org/elrepo-release-7.0-4.el7.elrepo.noarch.rpm
+  # yum --enablerepo=elrepo-kernel -y install kernel-ml
+  # grub2-set-default 0
+  # grub2-mkconfig -o /boot/grub2/grub.cfg
 fi
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.d/01network.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.d/01network.conf
@@ -95,8 +100,9 @@ sysctl --system
 if (( $UBUNTU == 0)); then
   apt-get install -y nginx
 else
-  yum install -y epel-release
-  yum install -y nginx
+  dnf install -y epel-release
+  dnf install -y nginx
+  
 fi
 
 systemctl start nginx
@@ -131,13 +137,14 @@ firewall-cmd --reload
 if (( $UBUNTU == 0)); then
   # https://www.postgresql.org/download/linux/ubuntu/
 else
-  rpm -Uvh https://yum.postgresql.org/11/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-  yum install postgresql11-server postgresql11 -y
-  initdb
-  sed -i 's/#\?\(listen_addresses\s*=\).*$/\1 '"'"'172.17.0.1, localhost'"'"'/' /var/lib/pgsql/11/data/postgresql.conf
-  echo "host all all 172.17.0.0/16 password" >> /var/lib/pgsql/11/data/pg_hba.conf
-  systemctl enable postgresql-11
-  systemctl start postgresql-11
+  dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+  dnf -qy module disable postgresql
+  dnf install -y postgresql12 postgresql12-server
+  /usr/pgsql-12/bin/postgresql-12-setup initdb
+  sed -i 's/#\?\(listen_addresses\s*=\).*$/\1 '"'"'172.17.0.1, localhost'"'"'/' /var/lib/pgsql/12/data/postgresql.conf
+  echo "host all all 172.17.0.0/16 password" >> /var/lib/pgsql/12/data/pg_hba.conf
+  systemctl enable postgresql-12
+  systemctl start postgresql-12
 fi
 
 if (( $UBUNTU == 0)); then
@@ -147,7 +154,9 @@ if (( $UBUNTU == 0)); then
   sudo add-apt-repository -y ppa:certbot/certbot
   sudo apt-get -y install certbot python2-certbot-dns-cloudflare
 else
-  yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-  yum install -y certbot
-  yum install -y python2-certbot-dns-cloudflare
+  ## not supported
+  # wget https://dl.eff.org/certbot-auto
+  # sudo mv certbot-auto /usr/local/bin/certbot-auto
+  # sudo chown root /usr/local/bin/certbot-auto
+  # sudo chmod 0755 /usr/local/bin/certbot-auto
 fi
